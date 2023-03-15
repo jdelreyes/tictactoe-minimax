@@ -3,13 +3,14 @@ import java.util.Scanner;
 // TODO: use Random class to generate random integers for accessing the 2 dimensional array.
 //      This helps us make an easy AI
 // TODO: the code messy, fix later
+// TODO: how do i better organize this?
+// TODO: we need some sort of interpreter
 
 public class Main {
     public static void main(String[] args) {
-        TicTacToe ticTacToe = new TicTacToe();
         Scanner scanner = new Scanner(System.in);
 
-        String aiType, choice;
+        String aiMode, choice;
         char playerSymbol = ' ', aiSymbol = ' ';
         int move;
 
@@ -35,8 +36,8 @@ public class Main {
             System.out.println("-------------------------");
             System.out.println("AI Type: \nenter 1 for:\tWeak AI\nenter 2 for:\tIntelligent AI");
             System.out.print("Please choose an AI: ");
-            aiType = scanner.nextLine();
-        } while (!aiType.equals("1") && !aiType.equals("2"));
+            aiMode = scanner.nextLine();
+        } while (!aiMode.equals("1") && !aiMode.equals("2"));
 
         do {
             System.out.println("-------------------------");
@@ -45,14 +46,18 @@ public class Main {
             choice = scanner.nextLine();
         } while(!choice.equals("1") && !choice.equals("2"));
 
-        ticTacToe.createGame(playerName, playerSymbol, aiSymbol);
+
+        TicTacToe ticTacToe = new TicTacToe(playerName, playerSymbol, aiSymbol, aiMode);
 
         System.out.println(ticTacToe.printBoard());
 
+        int x;
+
         do {
-            System.out.print("Enter move(1-9): ");
-            move = scanner.nextInt();
-        } while (ticTacToe.makeMove(move));
+            System.out.print("Please make a move: ");
+            x = scanner.nextInt();
+
+        } while (ticTacToe.playerMove(x));
 
     }
 }

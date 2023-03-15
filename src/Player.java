@@ -1,10 +1,8 @@
 public class Player {
     private String name;
-    private int score;
     private char playerSymbol;
 
     public Player() {
-        this.score = 0;
     }
 
     public String getName() {
@@ -13,14 +11,6 @@ public class Player {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public int getScore() {
-        return score;
-    }
-
-    public void setScore(int score) {
-        this.score = score;
     }
 
     public char getPlayerSymbol() {
@@ -35,7 +25,6 @@ public class Player {
     public String toString() {
         return "Player{" +
                 "name='" + name + '\'' +
-                ", score=" + score +
                 ", playerSymbol=" + playerSymbol +
                 '}';
     }
