@@ -3,9 +3,7 @@ public class Player {
     private int score;
     private char playerSymbol;
 
-    public Player(String name, char playerSymbol) {
-        this.name = name;
-        this.playerSymbol = playerSymbol;
+    public Player() {
         this.score = 0;
     }
 

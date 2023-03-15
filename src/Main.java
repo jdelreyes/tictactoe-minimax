@@ -1,41 +1,51 @@
 import java.util.Scanner;
 
-// IDEA: we can make another class called game that makes
-// a student instance and a board instance
+// TODO: use Random class to generate random integers for accessing the 2 dimensional array.
+//      This helps us make an easy AI
 
 public class Main {
     public static void main(String[] args) {
-        Scanner stringScanner = new Scanner(System.in);
-//
-        Board board = new Board();
+        TicTacToe ticTacToe = new TicTacToe();
+        Scanner scanner = new Scanner(System.in);
 
-        System.out.println(board.printBoard());
+        String aiType, choice;
+        char playerSymbol = ' ', computerSymbol = ' ';
+        int move;
 
         System.out.print("Please enter your name: ");
-        String playerName = stringScanner.nextLine();
-
-        String symbol, aiType, choice;
+        String playerName = scanner.nextLine();
 
         do {
             System.out.println("-------------------------");
             System.out.println("Symbols: \nenter 0 for symbol:\tO\nenter 1 for symbol:\tX");
             System.out.print("Please choose a symbol: ");
-            symbol = stringScanner.nextLine();
-        } while (!symbol.equals("0") && !symbol.equals("1"));
+            String symbol = scanner.nextLine();
+            if (symbol.equals("0")) playerSymbol = 'O';
+            if (symbol.equals("1")) playerSymbol = 'X';
+        } while (playerSymbol != 'O' && playerSymbol != 'X');
 
         do {
             System.out.println("-------------------------");
             System.out.println("AI Type: \nenter 0 for:\tWeak AI\nenter 1 for:\tIntelligent AI");
             System.out.print("Please choose an AI: ");
-            aiType = stringScanner.nextLine();
+            aiType = scanner.nextLine();
         } while (!aiType.equals("0") && !aiType.equals("1"));
 
         do {
             System.out.println("-------------------------");
             System.out.println("If you wish to play first, enter 0. Otherwise, enter 1");
             System.out.print("Please enter your choice: ");
-            choice = stringScanner.nextLine();
+            choice = scanner.nextLine();
         } while(!choice.equals("0") && !choice.equals("1"));
+
+        ticTacToe.createPlayer(playerName, playerSymbol);
+
+        System.out.println(ticTacToe.printBoard());
+
+        do {
+            System.out.print("Enter move(1-9): ");
+            move = scanner.nextInt();
+        } while (ticTacToe.makeMove(move));
 
     }
 }
