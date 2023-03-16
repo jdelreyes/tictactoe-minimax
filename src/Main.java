@@ -7,7 +7,6 @@ public class Main {
 
         String aiMode, choice;
         char playerSymbol = ' ', aiSymbol = ' ';
-        int move;
 
         System.out.print("Please enter your name: ");
         String playerName = scanner.nextLine();
