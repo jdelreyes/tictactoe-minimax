@@ -3,10 +3,10 @@ import java.util.Random;
 public class TicTacToe {
     private char[][] board;
     private Player player;
-    private char aiSymbol;
-    private String aiMode;
+    private char opponentSymbol;
+    private String gameMode;
 
-    public TicTacToe(String playerName, char playerSymbol, char aiSymbol, String aiMode) {
+    public TicTacToe(String playerName, char playerSymbol, char opponentSymbol, String gameMode) {
         board = new char[][]{
                 {'1', '2', '3'},
                 {'4', '5', '6'},
@@ -17,79 +17,44 @@ public class TicTacToe {
 
         player.setName(playerName);
         player.setPlayerSymbol(playerSymbol);
-        this.aiSymbol = aiSymbol;
-        this.aiMode = aiMode;
+        this.opponentSymbol = opponentSymbol;
+        this.gameMode = gameMode;
     }
 
-    public boolean weakAIMove() {
+    public void weakAIMove() {
         Random random = new Random();
 
-        int move = random.nextInt(9) + 1;
-        int moveCondition = makeMove(move, aiSymbol);
+        int move = 0;
 
-        while (moveCondition == -1 || moveCondition == -2) {
+        do {
             move = random.nextInt(9) + 1;
-            moveCondition = makeMove(move, aiSymbol);
-        }
+        } while (!isAvailable(move));
 
-        if (moveCondition == -3) {
-            System.out.println("The Opponent WON!");
-            return false;
-        }
-        if (moveCondition == -4) {
-            System.out.println("DRAW!");
-            return false;
-        }
-
-        return moveCondition == -5;
+        makeMove(move, opponentSymbol);
     }
 
-    public boolean playerMove(int move) {
-
-        int moveCondition = makeMove(move, player.getPlayerSymbol());
-
-        if (moveCondition == -1 || moveCondition == -2) {
-            System.out.println("Please enter a valid number");
-            return false;
-        }
-        if (moveCondition == -3) {
-            System.out.println("The Player WON!");
-            return false;
-        }
-        if (moveCondition == -4) {
-            System.out.println("DRAW!");
-            return false;
-        }
-        // if its valid
-        return moveCondition == -5;
+    public void playerMove(int move) {
+        makeMove(move, player.getPlayerSymbol());
     }
 
-    private int makeMove(int move, char symbol) {
-        if (!isAvailable(move)) return -1;
-        if (!isValidMove(move)) return -2;
-
+    private void makeMove(int move, char symbol) {
         int[] coordinates = getCoordinates(move);
         board[coordinates[0]][coordinates[1]] = symbol;
-        System.out.println(printBoard());
-
-        if (isWinning()) return -3;
-        if (isBoardFull()) return -4;
-
-        return -5;
     }
 
-    private boolean isValidMove(int move) {
-        return move <= 9 && move >= 1;
-    }
-
-    private boolean isAvailable(int move) {
+    //VALIDATIONS////////////////////////////////////////////////////////////START
+    public boolean isAvailable(int move) {
         int[] coordinates = getCoordinates(move);
         if (board[coordinates[0]][coordinates[1]] == 'X' || board[coordinates[0]][coordinates[1]] == 'O')
             return false;
         return true;
     }
 
-    private boolean isBoardFull() {
+    public boolean isValidMove(int move) {
+        return move >= 1 && move <= 9;
+    }
+
+    public boolean isBoardFull() {
         for (int i = 0; i < board.length; i++) {
             for (int j = 0; j < board.length; j++) {
                 if (board[i][j] != 'X' && board[i][j] != 'O') return false;
@@ -97,8 +62,9 @@ public class TicTacToe {
         }
         return true;
     }
+    //VALIDATIONS////////////////////////////////////////////////////////////END
 
-    private boolean isWinning() {
+    public boolean isWinning() {
         return (board[0][0] == board[0][1] && board[0][0] == board[0][2]) ||
                 (board[0][0] == board[1][1] && board[0][0] == board[2][2]) ||
                 (board[0][0] == board[1][0] && board[0][0] == board[2][0]) ||

@@ -56,7 +56,7 @@ public class Main {
             System.out.println("FAILED: Please Enter a Valid Choice");
         }
 
-        while(true) {
+        while (true) {
             System.out.println("--------------------------------------------");
             System.out.println("Please Enter The Turn Order (1-2)");
             System.out.println("1 : First Turn");
@@ -70,30 +70,139 @@ public class Main {
             System.out.println("FAILED: Please Enter a Valid Choice");
         }
 
-
         TicTacToe ticTacToe = new TicTacToe(playerName, playerSymbol, opponentSymbol, gameMode);
 
-        while (true) {
-            if (turnOrder.equals("1")) {
+
+        // THE GAME STARTS
+        System.out.println("--------------------------------------------");
+        System.out.println(ticTacToe.printBoard());
+
+        // PLAYER TURNS FIRST
+        // player goes first against a weak computer opponent
+        if (turnOrder.equals("1") && gameMode.equals("1")) {
+            while (true) {
+                // PLAYER TURN
+                while (true) {
+                    try {
+                        move = 0;
+
+                        System.out.println("--------------------------------------------");
+                        System.out.println("PLAYER TURN");
+                        System.out.println("Please Enter a Move");
+                        System.out.print("\t > ");
+                        String userInput = scanner.nextLine();
+
+                        move = Integer.parseInt(userInput);
+
+                        if (!ticTacToe.isValidMove(move)) throw new Exception();
+                        if (!ticTacToe.isAvailable(move)) throw new Exception();
+
+                        ticTacToe.playerMove(move);
+
+                        System.out.println("--------------------------------------------");
+                        System.out.println(ticTacToe.printBoard());
+
+                        break;
+                    } catch (Exception e) {
+                        System.out.println("--------------------------------------------");
+                        System.out.println("FAILED: Please Enter a Valid Move");
+                    }
+                }
+
+                if (ticTacToe.isWinning()) {
+                    System.out.println("PLAYER WON!");
+                    break;
+                }
+
+                // since if someone is winning is checked, we can say that if the board is full, it's a draw
+                if (ticTacToe.isBoardFull()) {
+                    System.out.println("DRAW!");
+                    break;
+                }
+
+                // OPPONENT TURN
+                System.out.println("--------------------------------------------");
+                System.out.println("OPPONENT TURN");
+
+                ticTacToe.weakAIMove();
+
                 System.out.println("--------------------------------------------");
                 System.out.println(ticTacToe.printBoard());
 
-                System.out.println("--------------------------------------------");
-                System.out.print("Please make a move: ");
-                move = scanner.nextInt();
-                if (!ticTacToe.playerMove(move)) break;
-                System.out.println("--------------------------------------------");
-                System.out.println("AI MOVE");
-                if (!ticTacToe.weakAIMove()) break;
+                if (ticTacToe.isWinning()) {
+                    System.out.println("COMPUTER WON!");
+                    break;
+                }
+
+                // since if someone is winning is checked, we can say that if the board is full, it's a draw
+                if (ticTacToe.isBoardFull()) {
+                    System.out.println("DRAW!");
+                    break;
+                }
             }
-            if (turnOrder.equals("2")) {
+        }
+        // OPPONENT TURNS FIRST
+        // player goes second against a weak computer opponent
+        if (turnOrder.equals("2") && gameMode.equals("1")) {
+            while (true){
+                // OPPONENT TURN
                 System.out.println("--------------------------------------------");
-                System.out.println("AI MOVE");
-                if (!ticTacToe.weakAIMove()) break;
+                System.out.println("OPPONENT TURN");
+
+                ticTacToe.weakAIMove();
+
                 System.out.println("--------------------------------------------");
-                System.out.print("Please make a move: ");
-                move = scanner.nextInt();
-                if (!ticTacToe.playerMove(move)) break;
+                System.out.println(ticTacToe.printBoard());
+
+                if (ticTacToe.isWinning()) {
+                    System.out.println("COMPUTER WON!");
+                    break;
+                }
+
+                // since if someone is winning is checked, we can say that if the board is full, it's a draw
+                if (ticTacToe.isBoardFull()) {
+                    System.out.println("DRAW!");
+                    break;
+                }
+
+                // PLAYER TURN
+                while (true) {
+                    try {
+                        move = 0;
+
+                        System.out.println("--------------------------------------------");
+                        System.out.println("PLAYER TURN");
+                        System.out.println("Please Enter a Move");
+                        System.out.print("\t > ");
+                        String userInput = scanner.nextLine();
+
+                        move = Integer.parseInt(userInput);
+
+                        if (!ticTacToe.isValidMove(move)) throw new Exception();
+                        if (!ticTacToe.isAvailable(move)) throw new Exception();
+
+                        ticTacToe.playerMove(move);
+
+                        System.out.println("--------------------------------------------");
+                        System.out.println(ticTacToe.printBoard());
+
+                        break;
+                    } catch (Exception e) {
+                        System.out.println("--------------------------------------------");
+                        System.out.println("FAILED: Please Enter a Valid Move");
+                    }
+                }
+
+                if (ticTacToe.isWinning()) {
+                    System.out.println("PLAYER WON!");
+                    break;
+                }
+
+                // since if someone is winning is checked, we can say that if the board is full, it's a draw
+                if (ticTacToe.isBoardFull()) {
+                    System.out.println("DRAW!");
+                    break;
+                }
             }
         }
     }
