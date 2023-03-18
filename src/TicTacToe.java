@@ -27,55 +27,55 @@ public class TicTacToe {
         int move = random.nextInt(9) + 1;
         int moveCondition = makeMove(move, aiSymbol);
 
-        while (moveCondition == 1 || moveCondition == 2) {
+        while (moveCondition == -1 || moveCondition == -2) {
             move = random.nextInt(9) + 1;
             moveCondition = makeMove(move, aiSymbol);
         }
 
-        if (moveCondition == 3) {
-            System.out.println("The AI won(change later)");
+        if (moveCondition == -3) {
+            System.out.println("The Opponent WON!");
             return false;
         }
-        if (moveCondition == 4) {
-            System.out.println("DRAW! (change later)");
+        if (moveCondition == -4) {
+            System.out.println("DRAW!");
             return false;
         }
 
-        return moveCondition == 5;
+        return moveCondition == -5;
     }
 
     public boolean playerMove(int move) {
 
         int moveCondition = makeMove(move, player.getPlayerSymbol());
 
-        if (moveCondition == 1 || moveCondition == 2) {
+        if (moveCondition == -1 || moveCondition == -2) {
             System.out.println("Please enter a valid number");
             return false;
         }
-        if (moveCondition == 3) {
-            System.out.println("The Player won(change later)");
+        if (moveCondition == -3) {
+            System.out.println("The Player WON!");
             return false;
         }
-        if (moveCondition == 4) {
-            System.out.println("DRAW! (change later)");
+        if (moveCondition == -4) {
+            System.out.println("DRAW!");
             return false;
         }
         // if its valid
-        return moveCondition == 5;
+        return moveCondition == -5;
     }
 
     private int makeMove(int move, char symbol) {
-        if (!isAvailable(move)) return 1;
-        if (!isValidMove(move)) return 2;
+        if (!isAvailable(move)) return -1;
+        if (!isValidMove(move)) return -2;
 
         int[] coordinates = getCoordinates(move);
         board[coordinates[0]][coordinates[1]] = symbol;
         System.out.println(printBoard());
 
-        if (isWinning()) return 3;
-        if (isBoardFull()) return 4;
+        if (isWinning()) return -3;
+        if (isBoardFull()) return -4;
 
-        return 5;
+        return -5;
     }
 
     private boolean isValidMove(int move) {
