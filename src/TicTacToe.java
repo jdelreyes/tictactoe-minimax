@@ -6,15 +6,6 @@ public class TicTacToe {
     private char opponentSymbol;
     private String gameMode;
 
-    // for printing purposes
-    public TicTacToe() {
-        board = new char[][]{
-                {' ', ' ', ' '},
-                {' ', ' ', ' '},
-                {' ', ' ', ' '}
-        };
-    }
-
     public TicTacToe(String playerName, char playerSymbol, char opponentSymbol, String gameMode) {
         board = new char[][]{
                 {' ', ' ', ' '},
@@ -33,13 +24,14 @@ public class TicTacToe {
     public void weakAIMove() {
         Random random = new Random();
 
-        int move = 0;
+        int column, row;
 
         do {
-            move = random.nextInt(9) + 1;
-        } while (!isAvailable(move));
+            row = (random.nextInt(3) + 1) - 1;
+            column = (random.nextInt(3) + 1) - 1;
+        } while (!isAvailable(row, column));
 
-        makeMove(move, opponentSymbol);
+        makeMove(row, column, opponentSymbol);
     }
 
     public void IntelligentAiMove() {
@@ -47,35 +39,33 @@ public class TicTacToe {
     }
 
     // optional for playing with another human player
-    public void opponentPlayerMove(int move) {
-        makeMove(move, opponentSymbol);
+    public void opponentPlayerMove(int row, int column) {
+        makeMove(row, column, opponentSymbol);
     }
 
-    public void playerMove(int move) {
-        makeMove(move, player.getPlayerSymbol());
+    public void playerMove(int row, int column) {
+        makeMove(row, column, player.getPlayerSymbol());
     }
 
-    private void makeMove(int move, char symbol) {
-        int[] coordinates = getCoordinates(move);
-        board[coordinates[0]][coordinates[1]] = symbol;
+    private void makeMove(int row, int column, char symbol) {
+        board[row][column] = symbol;
     }
 
     //VALIDATIONS////////////////////////////////////////////////////////////START
-    public boolean isAvailable(int move) {
-        int[] coordinates = getCoordinates(move);
-        if (board[coordinates[0]][coordinates[1]] == 'X' || board[coordinates[0]][coordinates[1]] == 'O')
-            return false;
-        return true;
+    public boolean isAvailable(int row, int column) {
+        if (board[row][column] == ' ')
+            return true;
+        return false;
     }
 
-    public boolean isValidMove(int move) {
-        return move >= 1 && move <= 9;
+    public boolean isValidMove(int row, int column) {
+        return column >= 0 && column <= 2 && row >= 0 && row <= 2;
     }
 
     public boolean isBoardFull() {
-        for (int i = 0; i < board.length; i++) {
-            for (int j = 0; j < board.length; j++) {
-                if (board[i][j] != 'X' && board[i][j] != 'O') return false;
+        for (int row = 0; row < board.length; row++) {
+            for (int column = 0; column < board.length; column++) {
+                if (board[row][column] != 'X' && board[row][column] != 'O') return false;
             }
         }
         return true;
@@ -109,37 +99,8 @@ public class TicTacToe {
                         && board[1][0] != ' ');
     }
 
-    private int[] getCoordinates(int move) {
-        switch (move) {
-            case 1 -> {
-                return new int[]{0, 0};
-            }
-            case 2 -> {
-                return new int[]{0, 1};
-            }
-            case 3 -> {
-                return new int[]{0, 2};
-            }
-            case 4 -> {
-                return new int[]{1, 0};
-            }
-            case 5 -> {
-                return new int[]{1, 1};
-            }
-            case 6 -> {
-                return new int[]{1, 2};
-            }
-            case 7 -> {
-                return new int[]{2, 0};
-            }
-            case 8 -> {
-                return new int[]{2, 1};
-            }
-            case 9 -> {
-                return new int[]{2, 2};
-            }
-        }
-        return new int[0];
+    public Player getPlayer() {
+        return player;
     }
 
     public String printBoard() {

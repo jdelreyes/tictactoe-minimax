@@ -1,7 +1,6 @@
 import java.util.Scanner;
 
-// TODO: should take 2 user inputs for column and row instead of 1 and
-//       automatically translate it to column and row
+// TODO:
 
 public class Main {
     public static void main(String[] args) {
@@ -9,8 +8,11 @@ public class Main {
         Scanner scanner = new Scanner(System.in);
 
         String gameMode, turnOrder;
-        char playerSymbol = ' ', opponentSymbol = ' ';
-        int move;
+        char playerSymbol, opponentSymbol;
+        int column, row;
+
+        column = row = 0;
+        playerSymbol = opponentSymbol = ' ';
 
 
         System.out.println("Welcome to The Tic-Tac-Toe Game Application!");
@@ -83,23 +85,26 @@ public class Main {
         // player goes first against a weak computer opponent
         if (turnOrder.equals("1") && gameMode.equals("1")) {
             while (true) {
-                // PLAYER TURN
                 while (true) {
                     try {
-                        move = 0;
-
                         System.out.println("--------------------------------------------");
                         System.out.println("PLAYER TURN");
-                        System.out.println("Please Enter a Move");
+                        System.out.println("Please Enter the Column");
                         System.out.print("\t > ");
-                        String userInput = scanner.nextLine();
 
-                        move = Integer.parseInt(userInput);
+                        String columnInput = scanner.nextLine();
 
-                        if (!ticTacToe.isValidMove(move)) throw new Exception();
-                        if (!ticTacToe.isAvailable(move)) throw new Exception();
+                        System.out.println("Please Enter the Row");
+                        System.out.print("\t > ");
+                        String rowInput = scanner.nextLine();
 
-                        ticTacToe.playerMove(move);
+                        row = Integer.parseInt(rowInput);
+                        column = Integer.parseInt(columnInput);
+
+                        if (!ticTacToe.isValidMove(row, column)) throw new Exception();
+                        if (!ticTacToe.isAvailable(row, column)) throw new Exception();
+
+                        ticTacToe.playerMove(row, column);
 
                         System.out.println("--------------------------------------------");
                         System.out.println(ticTacToe.printBoard());
@@ -112,7 +117,7 @@ public class Main {
                 }
 
                 if (ticTacToe.isWinning()) {
-                    System.out.println("PLAYER WON!");
+                    System.out.println(ticTacToe.getPlayer().getName() + " WON!");
                     break;
                 }
 
@@ -143,10 +148,8 @@ public class Main {
                 }
             }
         }
-        // OPPONENT TURNS FIRST
-        // player goes second against a weak computer opponent
         if (turnOrder.equals("2") && gameMode.equals("1")) {
-            while (true){
+            while (true) {
                 // OPPONENT TURN
                 System.out.println("--------------------------------------------");
                 System.out.println("OPPONENT TURN");
@@ -170,20 +173,24 @@ public class Main {
                 // PLAYER TURN
                 while (true) {
                     try {
-                        move = 0;
-
                         System.out.println("--------------------------------------------");
                         System.out.println("PLAYER TURN");
-                        System.out.println("Please Enter a Move");
+                        System.out.println("Please Enter the Column");
                         System.out.print("\t > ");
-                        String userInput = scanner.nextLine();
 
-                        move = Integer.parseInt(userInput);
+                        String columnInput = scanner.nextLine();
 
-                        if (!ticTacToe.isValidMove(move)) throw new Exception();
-                        if (!ticTacToe.isAvailable(move)) throw new Exception();
+                        System.out.println("Please Enter the Row");
+                        System.out.print("\t > ");
+                        String rowInput = scanner.nextLine();
 
-                        ticTacToe.playerMove(move);
+                        row = Integer.parseInt(rowInput);
+                        column = Integer.parseInt(columnInput);
+
+                        if (!ticTacToe.isValidMove(row, column)) throw new Exception();
+                        if (!ticTacToe.isAvailable(row, column)) throw new Exception();
+
+                        ticTacToe.playerMove(row, column);
 
                         System.out.println("--------------------------------------------");
                         System.out.println(ticTacToe.printBoard());
