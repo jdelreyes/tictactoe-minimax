@@ -6,11 +6,20 @@ public class TicTacToe {
     private char opponentSymbol;
     private String gameMode;
 
+    // for printing purposes
+    public TicTacToe() {
+        board = new char[][]{
+                {' ', ' ', ' '},
+                {' ', ' ', ' '},
+                {' ', ' ', ' '}
+        };
+    }
+
     public TicTacToe(String playerName, char playerSymbol, char opponentSymbol, String gameMode) {
         board = new char[][]{
-                {'1', '2', '3'},
-                {'4', '5', '6'},
-                {'7', '8', '9'}
+                {' ', ' ', ' '},
+                {' ', ' ', ' '},
+                {' ', ' ', ' '}
         };
 
         player = new Player();
@@ -30,6 +39,15 @@ public class TicTacToe {
             move = random.nextInt(9) + 1;
         } while (!isAvailable(move));
 
+        makeMove(move, opponentSymbol);
+    }
+
+    public void IntelligentAiMove() {
+
+    }
+
+    // optional for playing with another human player
+    public void opponentPlayerMove(int move) {
         makeMove(move, opponentSymbol);
     }
 
@@ -65,14 +83,30 @@ public class TicTacToe {
     //VALIDATIONS////////////////////////////////////////////////////////////END
 
     public boolean isWinning() {
-        return (board[0][0] == board[0][1] && board[0][0] == board[0][2]) ||
-                (board[0][0] == board[1][1] && board[0][0] == board[2][2]) ||
-                (board[0][0] == board[1][0] && board[0][0] == board[2][0]) ||
-                (board[2][0] == board[2][1] && board[2][0] == board[2][2]) ||
-                (board[2][0] == board[1][1] && board[2][0] == board[0][2]) ||
-                (board[0][2] == board[1][2] && board[0][2] == board[2][2]) ||
-                (board[0][1] == board[1][1] && board[0][1] == board[2][1]) ||
-                (board[1][0] == board[1][1] && board[1][0] == board[1][2]);
+        return (board[0][0] == board[0][1]
+                        && board[0][0] == board[0][2]
+                        && board[0][0] != ' ' ) ||
+                (board[0][0] == board[1][1]
+                        && board[0][0] == board[2][2]
+                        && board[0][0] != ' ') ||
+                (board[0][0] == board[1][0]
+                        && board[0][0] == board[2][0]
+                        && board[0][0] != ' ') ||
+                (board[2][0] == board[2][1]
+                        && board[2][0] == board[2][2]
+                        && board[2][0] != ' ') ||
+                (board[2][0] == board[1][1]
+                        && board[2][0] == board[0][2]
+                        && board[2][0] != ' ') ||
+                (board[0][2] == board[1][2]
+                        && board[0][2] == board[2][2]
+                        && board[0][2] != ' ') ||
+                (board[0][1] == board[1][1]
+                        && board[0][1] == board[2][1]
+                        && board[0][1] != ' ') ||
+                (board[1][0] == board[1][1]
+                        && board[1][0] == board[1][2]
+                        && board[1][0] != ' ');
     }
 
     private int[] getCoordinates(int move) {
@@ -109,15 +143,16 @@ public class TicTacToe {
     }
 
     public String printBoard() {
-        String output = "";
+        String output = "    0   1   2\n";
         for (int i = 0; i < 3; i++) {
-            output += " +---+---+---+ \n";
+            output += "  +---+---+---+ \n";
+            output += i;
             for (int j = 0; j < 3; j++) {
                 output += " | " + this.board[i][j];
             }
-            output += " |\n";
+            output += " | \n";
         }
-        output += " +---+---+---+ ";
+        output += "  +---+---+---+ ";
         return output;
     }
 }

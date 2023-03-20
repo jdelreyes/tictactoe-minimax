@@ -1,6 +1,7 @@
 import java.util.Scanner;
 
-// TODO:
+// TODO: should take 2 user inputs for column and row instead of 1 and
+//       automatically translate it to column and row
 
 public class Main {
     public static void main(String[] args) {
@@ -41,16 +42,17 @@ public class Main {
             System.out.println("FAILED: Please Enter a Valid Choice");
         }
 
-        // TODO: intelligent AI
+        // TODO: implement Minimax Algorithm for Intelligent AI
         while (true) {
             System.out.println("--------------------------------------------");
             System.out.println("Please Choose a Game Mode (1-2)");
             System.out.println("1 : Weak AI");
             System.out.println("2 : Intelligent AI");
+            System.out.println("3 : Opponent Player");
             System.out.print("\t > ");
             gameMode = scanner.nextLine();
 
-            if (gameMode.equals("1") || gameMode.equals("2")) break;
+            if (gameMode.equals("1") || gameMode.equals("2") || gameMode.equals("3")) break;
 
             System.out.println("--------------------------------------------");
             System.out.println("FAILED: Please Enter a Valid Choice");
@@ -204,6 +206,18 @@ public class Main {
                     break;
                 }
             }
+        }
+        if (turnOrder.equals("1") && gameMode.equals("2")) {
+
+        }
+        if (turnOrder.equals("2") && gameMode.equals("2")) {
+
+        }
+        if (turnOrder.equals("1") && gameMode.equals("3")) {
+
+        }
+        if (turnOrder.equals("2") && gameMode.equals("3")) {
+
         }
     }
 }
