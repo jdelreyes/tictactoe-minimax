@@ -7,12 +7,9 @@ public class Main {
 
         Scanner scanner = new Scanner(System.in);
 
-        String gameMode, turnOrder;
+        String difficulty, turnOrder;
         char playerSymbol, opponentSymbol;
         int column, row;
-
-        column = row = 0;
-        playerSymbol = opponentSymbol = ' ';
 
 
         System.out.println("Welcome to The Tic-Tac-Toe Game Application!");
@@ -47,14 +44,14 @@ public class Main {
         // TODO: implement Minimax Algorithm for Intelligent AI
         while (true) {
             System.out.println("--------------------------------------------");
-            System.out.println("Please Choose a Game Mode (1-2)");
+            System.out.println("Please Choose Difficulty (1-2)");
             System.out.println("1 : Weak AI");
             System.out.println("2 : Intelligent AI");
             System.out.println("3 : Opponent Player");
             System.out.print("\t > ");
-            gameMode = scanner.nextLine();
+            difficulty = scanner.nextLine();
 
-            if (gameMode.equals("1") || gameMode.equals("2") || gameMode.equals("3")) break;
+            if (difficulty.equals("1") || difficulty.equals("2") || difficulty.equals("3")) break;
 
             System.out.println("--------------------------------------------");
             System.out.println("FAILED: Please Enter a Valid Choice");
@@ -74,7 +71,7 @@ public class Main {
             System.out.println("FAILED: Please Enter a Valid Choice");
         }
 
-        TicTacToe ticTacToe = new TicTacToe(playerName, playerSymbol, opponentSymbol, gameMode);
+        TicTacToe ticTacToe = new TicTacToe(playerName, playerSymbol, opponentSymbol, difficulty);
 
 
         // THE GAME STARTS
@@ -83,7 +80,7 @@ public class Main {
 
         // PLAYER TURNS FIRST
         // player goes first against a weak computer opponent
-        if (turnOrder.equals("1") && gameMode.equals("1")) {
+        if (turnOrder.equals("1") && difficulty.equals("1")) {
             while (true) {
                 while (true) {
                     try {
@@ -148,7 +145,7 @@ public class Main {
                 }
             }
         }
-        if (turnOrder.equals("2") && gameMode.equals("1")) {
+        if (turnOrder.equals("2") && difficulty.equals("1")) {
             while (true) {
                 // OPPONENT TURN
                 System.out.println("--------------------------------------------");
@@ -214,16 +211,141 @@ public class Main {
                 }
             }
         }
-        if (turnOrder.equals("1") && gameMode.equals("2")) {
+        if (turnOrder.equals("1") && difficulty.equals("2")) {
+            while (true) {
+                while (true) {
+                    try {
+                        System.out.println("--------------------------------------------");
+                        System.out.println("PLAYER TURN");
+                        System.out.println("Please Enter the Column");
+                        System.out.print("\t > ");
+
+                        String columnInput = scanner.nextLine();
+
+                        System.out.println("Please Enter the Row");
+                        System.out.print("\t > ");
+                        String rowInput = scanner.nextLine();
+
+                        row = Integer.parseInt(rowInput);
+                        column = Integer.parseInt(columnInput);
+
+                        if (!ticTacToe.isValidMove(row, column)) throw new Exception();
+                        if (!ticTacToe.isAvailable(row, column)) throw new Exception();
+
+                        ticTacToe.playerMove(row, column);
+
+                        System.out.println("--------------------------------------------");
+                        System.out.println(ticTacToe.printBoard());
+
+                        break;
+                    } catch (Exception e) {
+                        System.out.println("--------------------------------------------");
+                        System.out.println("FAILED: Please Enter a Valid Move");
+                    }
+                }
+
+                if (ticTacToe.isWinning()) {
+                    System.out.println(ticTacToe.getPlayer().getName() + " WON!");
+                    break;
+                }
+
+                // since if someone is winning is checked, we can say that if the board is full, it's a draw
+                if (ticTacToe.isBoardFull()) {
+                    System.out.println("DRAW!");
+                    break;
+                }
+
+                // OPPONENT TURN
+                System.out.println("--------------------------------------------");
+                System.out.println("OPPONENT TURN");
+
+                ticTacToe.IntelligentAiMove();
+
+                System.out.println("--------------------------------------------");
+                System.out.println(ticTacToe.printBoard());
+
+                if (ticTacToe.isWinning()) {
+                    System.out.println("COMPUTER WON!");
+                    break;
+                }
+
+                // since if someone is winning is checked, we can say that if the board is full, it's a draw
+                if (ticTacToe.isBoardFull()) {
+                    System.out.println("DRAW!");
+                    break;
+                }
+            }
+        }
+        if (turnOrder.equals("2") && difficulty.equals("2")) {
+            while (true) {
+                // OPPONENT TURN
+                System.out.println("--------------------------------------------");
+                System.out.println("OPPONENT TURN");
+
+                ticTacToe.IntelligentAiMove();
+
+                System.out.println("--------------------------------------------");
+                System.out.println(ticTacToe.printBoard());
+
+                if (ticTacToe.isWinning()) {
+                    System.out.println("COMPUTER WON!");
+                    break;
+                }
+
+                // since if someone is winning is checked, we can say that if the board is full, it's a draw
+                if (ticTacToe.isBoardFull()) {
+                    System.out.println("DRAW!");
+                    break;
+                }
+
+                // PLAYER TURN
+                while (true) {
+                    try {
+                        System.out.println("--------------------------------------------");
+                        System.out.println("PLAYER TURN");
+                        System.out.println("Please Enter the Column");
+                        System.out.print("\t > ");
+
+                        String columnInput = scanner.nextLine();
+
+                        System.out.println("Please Enter the Row");
+                        System.out.print("\t > ");
+                        String rowInput = scanner.nextLine();
+
+                        row = Integer.parseInt(rowInput);
+                        column = Integer.parseInt(columnInput);
+
+                        if (!ticTacToe.isValidMove(row, column)) throw new Exception();
+                        if (!ticTacToe.isAvailable(row, column)) throw new Exception();
+
+                        ticTacToe.playerMove(row, column);
+
+                        System.out.println("--------------------------------------------");
+                        System.out.println(ticTacToe.printBoard());
+
+                        break;
+                    } catch (Exception e) {
+                        System.out.println("--------------------------------------------");
+                        System.out.println("FAILED: Please Enter a Valid Move");
+                    }
+                }
+
+                if (ticTacToe.isWinning()) {
+                    System.out.println("PLAYER WON!");
+                    break;
+                }
+
+                // since if someone is winning is checked, we can say that if the board is full, it's a draw
+                if (ticTacToe.isBoardFull()) {
+                    System.out.println("DRAW!");
+                    break;
+                }
+            }
+        }
+        if (turnOrder.equals("1") && difficulty.equals("3")) {
 
         }
-        if (turnOrder.equals("2") && gameMode.equals("2")) {
-
-        }
-        if (turnOrder.equals("1") && gameMode.equals("3")) {
-
-        }
-        if (turnOrder.equals("2") && gameMode.equals("3")) {
+        if (turnOrder.equals("2") && difficulty.equals("3")) {
 
         }
     }

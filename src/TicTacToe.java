@@ -4,9 +4,9 @@ public class TicTacToe {
     private char[][] board;
     private Player player;
     private char opponentSymbol;
-    private String gameMode;
+    private String difficulty;
 
-    public TicTacToe(String playerName, char playerSymbol, char opponentSymbol, String gameMode) {
+    public TicTacToe(String playerName, char playerSymbol, char opponentSymbol, String difficulty) {
         board = new char[][]{
                 {' ', ' ', ' '},
                 {' ', ' ', ' '},
@@ -18,7 +18,7 @@ public class TicTacToe {
         player.setName(playerName);
         player.setPlayerSymbol(playerSymbol);
         this.opponentSymbol = opponentSymbol;
-        this.gameMode = gameMode;
+        this.difficulty = difficulty;
     }
 
     public void weakAIMove() {
@@ -35,7 +35,61 @@ public class TicTacToe {
     }
 
     public void IntelligentAiMove() {
+        if (difficulty.equals("easy")) {
+            weakAIMove();
+            return;
+        }
 
+        int bestScore = Integer.MIN_VALUE;
+        int bestRow = -1;
+        int bestCol = -1;
+
+        for (int row = 0; row < 3; row++) {
+            for (int col = 0; col < 3; col++) {
+                if (isAvailable(row, col)) {
+                    board[row][col] = opponentSymbol;
+                    int score = minimax(0, false);
+                    board[row][col] = ' ';
+
+                    if (score > bestScore) {
+                        bestScore = score;
+                        bestRow = row;
+                        bestCol = col;
+                    }
+                }
+            }
+        }
+
+        makeMove(bestRow, bestCol, opponentSymbol);
+    }
+
+    private int minimax(int depth, boolean isMaximizingPlayer) {
+        if (isWinning()) {
+            return isMaximizingPlayer ? -1 : 1;
+        } else if (isBoardFull()) {
+            return 0;
+        }
+
+        int bestScore = isMaximizingPlayer ? Integer.MIN_VALUE : Integer.MAX_VALUE;
+
+        for (int row = 0; row < 3; row++) {
+            for (int col = 0; col < 3; col++) {
+                if (isAvailable(row, col)) {
+                    char symbol = isMaximizingPlayer ? opponentSymbol : player.getPlayerSymbol();
+                    board[row][col] = symbol;
+
+                    if (isMaximizingPlayer) {
+                        bestScore = Math.max(bestScore, minimax(depth + 1, false));
+                    } else {
+                        bestScore = Math.min(bestScore, minimax(depth + 1, true));
+                    }
+
+                    board[row][col] = ' ';
+                }
+            }
+        }
+
+        return bestScore;
     }
 
     // optional for playing with another human player
@@ -52,20 +106,16 @@ public class TicTacToe {
     }
 
     //VALIDATIONS////////////////////////////////////////////////////////////START
-    public boolean isAvailable(int row, int column) {
-        if (board[row][column] == ' ')
-            return true;
-        return false;
-    }
+    public boolean isAvailable(int row, int column) { return board[row][column] == ' '; }
 
     public boolean isValidMove(int row, int column) {
         return column >= 0 && column <= 2 && row >= 0 && row <= 2;
     }
 
     public boolean isBoardFull() {
-        for (int row = 0; row < board.length; row++) {
+        for (char[] chars : board) {
             for (int column = 0; column < board.length; column++) {
-                if (board[row][column] != 'X' && board[row][column] != 'O') return false;
+                if (chars[column] == ' ') return false;
             }
         }
         return true;
