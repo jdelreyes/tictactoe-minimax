@@ -4,9 +4,8 @@ public class TicTacToe {
     private char[][] board;
     private Player player;
     private char opponentSymbol;
-    private String difficulty;
 
-    public TicTacToe(String playerName, char playerSymbol, char opponentSymbol, String difficulty) {
+    public TicTacToe(String playerName, char playerSymbol, char opponentSymbol) {
         board = new char[][]{
                 {' ', ' ', ' '},
                 {' ', ' ', ' '},
@@ -18,7 +17,6 @@ public class TicTacToe {
         player.setName(playerName);
         player.setPlayerSymbol(playerSymbol);
         this.opponentSymbol = opponentSymbol;
-        this.difficulty = difficulty;
     }
 
     public void weakAIMove() {
@@ -35,11 +33,6 @@ public class TicTacToe {
     }
 
     public void IntelligentAiMove() {
-        if (difficulty.equals("easy")) {
-            weakAIMove();
-            return;
-        }
-
         int bestScore = Integer.MIN_VALUE;
         int bestRow = -1;
         int bestCol = -1;

@@ -1,7 +1,5 @@
 import java.util.Scanner;
 
-// TODO:
-
 public class Main {
     public static void main(String[] args) {
 
@@ -47,11 +45,11 @@ public class Main {
             System.out.println("Please Choose Difficulty (1-2)");
             System.out.println("1 : Weak AI");
             System.out.println("2 : Intelligent AI");
-            System.out.println("3 : Opponent Player");
+            // System.out.println("3 : Opponent Player");
             System.out.print("\t > ");
             difficulty = scanner.nextLine();
 
-            if (difficulty.equals("1") || difficulty.equals("2") || difficulty.equals("3")) break;
+            if (difficulty.equals("1") || difficulty.equals("2")/* || difficulty.equals("3")*/) break;
 
             System.out.println("--------------------------------------------");
             System.out.println("FAILED: Please Enter a Valid Choice");
@@ -71,7 +69,7 @@ public class Main {
             System.out.println("FAILED: Please Enter a Valid Choice");
         }
 
-        TicTacToe ticTacToe = new TicTacToe(playerName, playerSymbol, opponentSymbol, difficulty);
+        TicTacToe ticTacToe = new TicTacToe(playerName, playerSymbol, opponentSymbol);
 
 
         // THE GAME STARTS
@@ -85,7 +83,7 @@ public class Main {
                 while (true) {
                     try {
                         System.out.println("--------------------------------------------");
-                        System.out.println("PLAYER TURN");
+                        System.out.println("PLAYER TURN (" + ticTacToe.getPlayer().getPlayerSymbol() + ")");
                         System.out.println("Please Enter the Column");
                         System.out.print("\t > ");
 
@@ -126,7 +124,7 @@ public class Main {
 
                 // OPPONENT TURN
                 System.out.println("--------------------------------------------");
-                System.out.println("OPPONENT TURN");
+                System.out.println("OPPONENT TURN (" + opponentSymbol + ")");
 
                 ticTacToe.weakAIMove();
 
@@ -149,7 +147,7 @@ public class Main {
             while (true) {
                 // OPPONENT TURN
                 System.out.println("--------------------------------------------");
-                System.out.println("OPPONENT TURN");
+                System.out.println("OPPONENT TURN (" + opponentSymbol + ")");
 
                 ticTacToe.weakAIMove();
 
@@ -171,7 +169,7 @@ public class Main {
                 while (true) {
                     try {
                         System.out.println("--------------------------------------------");
-                        System.out.println("PLAYER TURN");
+                        System.out.println("PLAYER TURN (" + ticTacToe.getPlayer().getPlayerSymbol() + ")");
                         System.out.println("Please Enter the Column");
                         System.out.print("\t > ");
 
@@ -216,7 +214,7 @@ public class Main {
                 while (true) {
                     try {
                         System.out.println("--------------------------------------------");
-                        System.out.println("PLAYER TURN");
+                        System.out.println("PLAYER TURN (" + ticTacToe.getPlayer().getPlayerSymbol() + ")");
                         System.out.println("Please Enter the Column");
                         System.out.print("\t > ");
 
@@ -257,7 +255,7 @@ public class Main {
 
                 // OPPONENT TURN
                 System.out.println("--------------------------------------------");
-                System.out.println("OPPONENT TURN");
+                System.out.println("OPPONENT TURN (" + opponentSymbol + ")");
 
                 ticTacToe.IntelligentAiMove();
 
@@ -280,7 +278,7 @@ public class Main {
             while (true) {
                 // OPPONENT TURN
                 System.out.println("--------------------------------------------");
-                System.out.println("OPPONENT TURN");
+                System.out.println("OPPONENT TURN (" + opponentSymbol + ")");
 
                 ticTacToe.IntelligentAiMove();
 
@@ -302,7 +300,7 @@ public class Main {
                 while (true) {
                     try {
                         System.out.println("--------------------------------------------");
-                        System.out.println("PLAYER TURN");
+                        System.out.println("PLAYER TURN (" + ticTacToe.getPlayer().getPlayerSymbol() + ")");
                         System.out.println("Please Enter the Column");
                         System.out.print("\t > ");
 
