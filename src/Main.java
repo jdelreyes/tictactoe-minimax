@@ -1,15 +1,3 @@
-//First Name: Jerome
-//Last Name: Delos Reyes
-//Student ID: 101324620
-
-//First Name: Berniel
-//Last Name: Francisco
-//Student ID: 101388202
-
-// First Name: Zoe
-//Last Name: Detlefsen
-//Student ID: 101176144
-
 import java.util.Scanner;
 
 public class Main {
@@ -53,7 +41,7 @@ public class Main {
 
         while (true) {
             System.out.println("--------------------------------------------");
-            System.out.println("Please Choose Difficulty (1-2)");
+            System.out.println("Please Choose Difficulty (1-3)");
             System.out.println("1 : Weak AI");
             System.out.println("2 : Intelligent AI");
             System.out.println("3 : Opponent Player");
