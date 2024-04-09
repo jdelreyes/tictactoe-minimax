@@ -1,9 +1,9 @@
 import java.util.Random;
 
 public class TicTacToe {
-    private char[][] board;
-    private Player player;
-    private char opponentSymbol;
+    private final char[][] board;
+    private final Player player;
+    private final char opponentSymbol;
 
     public TicTacToe(String playerName, char playerSymbol, char opponentSymbol) {
         board = new char[][]{
@@ -147,16 +147,16 @@ public class TicTacToe {
     }
 
     public String printBoard() {
-        String output = "    0   1   2\n";
+        StringBuilder output = new StringBuilder("    0   1   2\n");
         for (int i = 0; i < 3; i++) {
-            output += "  +---+---+---+ \n";
-            output += i;
+            output.append("  +---+---+---+ \n");
+            output.append(i);
             for (int j = 0; j < 3; j++) {
-                output += " | " + this.board[i][j];
+                output.append(" | ").append(this.board[i][j]);
             }
-            output += " | \n";
+            output.append(" | \n");
         }
-        output += "  +---+---+---+ ";
-        return output;
+        output.append("  +---+---+---+ ");
+        return output.toString();
     }
 }
